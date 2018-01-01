@@ -22,11 +22,21 @@ html(lang='en')
 
     <!-- Script -->
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
-    script(src='/js/script.js')          
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    script(src='/js/script.js')
     
     <!-- Favicon -->
     link(rel='icon' href='images/favicon.png' type='image/png')
   body
+    div(class='row')
+      ul(class='nav nav-tabs')
+        li(class='active')
+          a(href='/') Home
+        li
+          a(href='/family') Families
+        li
+          a(href='/reset') Reset family data
+
     div(class='container ptc-custom u-full-width u-max-full-width')
       div(class='row')
         div(class='three columns ptc-left')
