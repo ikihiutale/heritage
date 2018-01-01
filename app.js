@@ -1,7 +1,12 @@
 var express = require('express');
+// Parses the body portion of an incoming HTTP request
 var path = require('path');
 var favicon = require('serve-favicon');
+
+// An HTTP request logger middleware for node
 var logger = require('morgan');
+
+// Used to parse the cookie header and populate req.cookies
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
