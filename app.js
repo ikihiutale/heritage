@@ -1,4 +1,5 @@
 var express = require('express');
+var mongoose = require('mongoose');
 // Parses the body portion of an incoming HTTP request
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -10,10 +11,19 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// Files for dealing routes
 var index = require('./routes/index');
 var heritage = require('./routes/heritage');
 
 var app = express();
+
+//Set up DB connection
+mongoose.connect(process.env.DBURL, {});
+mongoose.Promise = global.Promise;
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.on('connected', console.error.bind(console, 'MongoDB connected'));
+db.on('disconnected', console.error.bind(console, 'MongoDB disconnected'));
 
 // View engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,6 +37,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Add route-handling code to the request handling chain in order to 
+// to define particular routes for the different parts of the site
 app.use('/', index);
 app.use('/heritage', heritage);
 
@@ -48,4 +60,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// Express application fully configured
 module.exports = app;
