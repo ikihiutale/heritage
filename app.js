@@ -13,7 +13,7 @@ var bodyParser = require('body-parser');
 
 // Files for dealing routes
 var index = require('./routes/index');
-var heritage = require('./routes/heritage');
+var family = require('./routes/family');
 
 var app = express();
 
@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Add route-handling code to the request handling chain in order to 
 // to define particular routes for the different parts of the site
 app.use('/', index);
-app.use('/heritage', heritage);
+app.use('/family', family);
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {
