@@ -1,58 +1,41 @@
 doctype html
 html(lang='en')
   head
-    <!-- Basic Page Needs -->
-    meta(charset='utf-8')
-    title=title
-    meta(name='description' content='')
-    meta(name='author' content='')
+    block head
+      <!-- Basic Page Needs -->
+      meta(charset='utf-8')
+      title=title
+      meta(name='description' content='')
+      meta(name='author' content='')
 
-    <!-- Mobile Specific Metas -->
-    meta(name='viewport', content='width=device-width, initial-scale=1')
+      <!-- Mobile Specific Metas -->
+      meta(name='viewport', content='width=device-width, initial-scale=1')
     
-    <!-- Font -->
-    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway:300,400,500,600')
-    link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Oswald:300,400,500,600')
+      <!-- Font -->
+      link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Raleway:300,400,500,600')
+      link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Oswald:300,400,500,600')
 
-    <!-- CSS -->
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-    link(rel='stylesheet' href='/stylesheets/normalize.css')
-    link(rel='stylesheet' href='/stylesheets/skeleton.css')
-    link(rel='stylesheet' href='/stylesheets/style.css')
+      <!-- CSS -->
+      link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
+      link(rel='stylesheet' href='/stylesheets/normalize.css')
+      link(rel='stylesheet' href='/stylesheets/skeleton.css')
+      link(rel='stylesheet' href='/stylesheets/style.css')
 
-    <!-- Script -->
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
-    script(src='/js/script.js')
+      <!-- Script -->
+      script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
+      script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+      script(src='/js/script.js')
     
-    <!-- Favicon -->
-    link(rel='icon' href='images/favicon.png' type='image/png')
+      <!-- Favicon -->
+      link(rel='icon' href='images/favicon.png' type='image/png')
   body
-    div(class='row')
-      ul(class='nav nav-tabs')
-        li(class='active')
-          a(href='/') Home
-        li
-          a(href='/family') Families
-        li
-          a(href='/reset') Reset family data
-
-    div(class='container ptc-custom u-full-width u-max-full-width')
+    block navi
       div(class='row')
-        div(class='three columns ptc-left')
-          div(class='logo')
-            a(href='https://www.protacon.com/' target='_new')
-              img(src='images/protacon_logo.png')
-          hr
-          h2 Valitse sukupuu
-          div(class='scroll')
-            div(id='person01')
-              ul
-                li Julia Humanisti
-            block sidebar
-
-        div(class='nine columns ptc-right')
-          h1 Julia Humanistin sukupuu
-          div(class='ptc-tree-background')
-            div(class='ptc-family-tree')
-              block content   
+        ul(class='nav nav-tabs')
+          li(class='active')
+            a(href='/') Home
+          li
+            a(href='/family') Families
+          li
+            a(href='/reset') Reset family data
+    block content

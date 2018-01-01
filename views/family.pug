@@ -1,5 +1,24 @@
 extends layout
 
-block content
-  h1= title
-  p Welcome to #{title} jee jee 333
+block content   
+  div(class='row')
+    div(class='col-md-12')
+      div(class='container ptc-custom u-full-width u-max-full-width')
+        div(class='row')
+          div(class='three columns ptc-left')
+            div(class='logo')
+              a(href='https://www.protacon.com/' target='_new')
+                img(src='images/protacon_logo.png')
+            hr
+            h2 Valitse sukupuu
+            div(class='scroll')
+              div(id='person01')
+                ul
+                  li Julia Humanisti
+              block sidebar
+      
+          div(class='nine columns ptc-right')
+            h1 Julia Humanistin sukupuu
+            div(class='ptc-tree-background')
+              div(class='ptc-family-tree')
+
