@@ -1,4 +1,24 @@
 extends layout
+mixin memberLink(member)
+  a(href=member.url) #{member.name}
+
+mixin parseGrandparents(grandparents)
+  if (grandparents.length == 2)
+    memberTree(grandparents[0], [1])
+  else if (grandparents.length == 1)
+    memberTree(grandparents[0])    
+
+mixin memberTree(mother, father)
+  if mother || father    
+    ul
+      if mother
+        li
+          +memberLink(mother)
+          +parseGrandparents(data.motherParents)
+      if father
+        li
+          +memberLink(father)
+          +parseGrandparents(data.fatherParents)
 
 block content   
   div(class='row')
@@ -12,7 +32,7 @@ block content
               ul.members
                 each member in data.members
                   li 
-                    a(href=member.url) #{member.name} 
+                    +memberLink(member) 
                 else
                   li There are no members.
           div(class='nine columns ptc-right')
@@ -20,4 +40,9 @@ block content
               h1 Family tree of - #{data.member.name}
             div(class='ptc-tree-background')
               div(class='ptc-family-tree')
-
+                ul
+                  each member in data.siblings
+                    li 
+                      +memberLink(member)
+                        if data.member.id == member.id
+                          +memberTree(data.mother, data.father)

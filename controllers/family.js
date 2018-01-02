@@ -37,6 +37,9 @@ exports.tree = function(req, res, next) {
     if (siblings.length) {
       siblings.splice(Math.round((siblings.length - 1) / 2), 0, treeData.member);
     }
+    else {
+      siblings.push(treeData.member);
+    }
     console.log("SIBLINGS.. " + siblings);
     
     treeData.siblings = siblings;

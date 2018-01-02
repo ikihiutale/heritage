@@ -26,3 +26,21 @@
 ul.members li {
  list-style-type: none;
 }
+
+.ptc-family-tree li a {
+  padding: 5px;
+  display: table-cell; 
+  vertical-align: middle; 
+}
+
+.ptc-family-tree li {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.ptc-family-tree li:before,
+.ptc-family-tree li:after {
+    top: -20px !important;
+}
