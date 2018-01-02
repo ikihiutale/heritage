@@ -1,49 +1,57 @@
 'use strict';
 
 var mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
 var Member = require('../models/member');
 var familyTreeData = require('../db/family_tree.json')
 var async = require('async');
 
-function fetchParents(memberId, callback) {
-  Member.findById(memberId).exec(function(err, memberObj) {
-    if (err) {
-      return callback(err);
-    }   
-    callback(err, memberObj);
-  });
-};
-  
-function fetchMemberData(memberId, callback) {
-  async.parallel({    
-    members: function(callback) {
-      Member.find().sort([['lastName', 'ascending']]).exec(callback);
-    },
-    memberCount: function(callback) {
-      Member.count(callback);
-    },
-    tree: function(callback) {
-      fetchParents(memberId, callback);
-    }
-  }, function(err, results) {
-    callback(err, results);
+//GET: display family tree page
+exports.tree = function(req, res, next) {
+  var memberId = req.params.memberId;
+  var treeData = {};
+  Member.find().sort([['lastName', 'ascending']]).exec()  
+  .then(function(members) {
+    treeData.members = members;
+    treeData.memberCount = members.length;
+    console.log("Members count " + treeData.memberCount);    
+    return Member.findById(memberId).exec();
+  })
+  .then(function(member) {
+    console.log("Member: " + memberId + ", " + (member ? member.id : 'null'));
+    treeData.member = member;
+    console.log("MEMBER.. " + treeData.member);
+    return Member.find().or([
+      { $and: [{father: member.father}, {father: {$ne: null}}, {id: {$ne: member.id}}]},
+      { $and: [{mother: member.mother}, {mother: {$ne: null}}, {id: {$ne: member.id}}]}
+    ]).exec();
+  })
+  .then(function(siblings) {
+    console.log("SIBLINGS.. " + siblings);
+    treeData.siblings = siblings;
+    res.render('family', { title: 'Family tree', data: treeData});
+  })
+  .catch(function(err) {
+    console.log('Family -> data: ' + err);
+    next(err);
   });
 };
 
 //GET: list of members
 exports.members = function(req, res, next) {
-  fetchMemberData(null, function(err, results) {
-      if (err) { return next(err); }
-      res.render('family', { title: 'Member List', data: results});
-  });
-};
-
-// GET: display family tree page
-exports.tree = function(req, res, next) {
-  fetchMemberData(req.params.memberId, function(err, results) {
-    if (err) { return next(err); }
-    res.render('family', { title: 'Member List', data: results});
+  var treeData = {};
+  Member.find().sort([['lastName', 'ascending']]).exec()
+  .then(function(result) {
+    treeData.members = result;
+    treeData.memberCount = result.length;
+    console.log("Member count " + treeData.memberCount);
+    return treeData;
+  })
+  .then(function(results){
+      res.render('family', { title: 'Family tree', data: results});
+  })
+  .catch(function(err) {
+    console.log('Family -> members: ' + err);
+    next(err);
   });
 };
 
