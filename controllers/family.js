@@ -9,13 +9,19 @@ var async = require('async');
 exports.tree = function(req, res, next) {
   var memberId = req.params.memberId;
   var treeData = {};
+  
+  // Find members
   Member.find().sort([['lastName', 'ascending']]).exec()  
   .then(function(members) {
     treeData.members = members;
     treeData.memberCount = members.length;
-    console.log("Members count " + treeData.memberCount);    
+    console.log("Members count " + treeData.memberCount);
+
+    // Find member
     return Member.findById(memberId).exec();
   })
+  
+  // Find siblings
   .then(function(member) {
     console.log("Member: " + memberId + ", " + (member ? member.id : 'null'));
     treeData.member = member;
@@ -25,9 +31,39 @@ exports.tree = function(req, res, next) {
       { $and: [{mother: member.mother}, {mother: {$ne: null}}, {id: {$ne: member.id}}]}
     ]).exec();
   })
+
+  // Find mother
   .then(function(siblings) {
     console.log("SIBLINGS.. " + siblings);
     treeData.siblings = siblings;
+    return Member.find({id: { $in : treeData.member.mother}}).exec();
+  })
+
+  // Find father
+  .then(function(mother) {
+    console.log("MOTHER.. " + mother);
+    treeData.mother = mother;
+    return Member.find({id: { $in : treeData.member.father}}).exec();    
+  })
+
+  // Find mother's parents
+  .then(function(father) {
+    console.log("FATHER.. " + father);
+    treeData.father = father;
+    return Member.find({id: { $in : [treeData.mother.mother, treeData.mother.father]}}).exec();
+  })
+
+  // Find father's parents
+  .then(function(motherParents) {
+    console.log("MOTHER's PARENTS.. " + motherParents);
+    treeData.motherParents = motherParents;
+    return Member.find({id: { $in : [treeData.father.mother, treeData.father.father]}}).exec();
+  })
+
+  // Find father's parents
+  .then(function(fatherParents) {
+    console.log("FATHER's PARENTS.. " + fatherParents);
+    treeData.fatherParents = fatherParents;
     res.render('family', { title: 'Family tree', data: treeData});
   })
   .catch(function(err) {
