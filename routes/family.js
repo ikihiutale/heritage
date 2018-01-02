@@ -7,13 +7,10 @@ var familyCtrl = require('../controllers/family');
 /* FAMILY ROUTES */
 
 /* GET family home page */
-router.get('/', familyCtrl.index);
+router.get('/', familyCtrl.members);
 
 /* GET family tree */
-router.get('/:familyId', familyCtrl.tree);
-
-/* GET family tree */
-router.get('/:familyId/member/:memberId', familyCtrl.siblings);
+router.get('/:memberId', familyCtrl.tree);
 
 /* GET reset family */
 router.get('/reset', familyCtrl.reset);

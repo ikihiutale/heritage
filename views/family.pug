@@ -6,16 +6,15 @@ block content
       div(class='container ptc-custom u-full-width u-max-full-width')
         div(class='row')
           div(class='three columns ptc-left')
-            div(class='logo')
-              a(href='https://www.protacon.com/' target='_new')
-                img(src='images/protacon_logo.png')
-            hr
-            h2 Valitse sukupuu
-            div(class='scroll')
-              div(id='person01')
-                ul
-                  li Julia Humanisti
-              block sidebar
+            hr 
+            h2 Select family tree #{data.memberCount}
+            ul.members
+              each member in data.members
+                li 
+                  a(href=member.url) #{member.name} 
+
+              else
+                li There are no books.
       
           div(class='nine columns ptc-right')
             h1 Julia Humanistin sukupuu

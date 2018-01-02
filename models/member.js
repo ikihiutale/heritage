@@ -14,5 +14,10 @@ MemberSchema.virtual('name').get(function () {
   return this.firstName + ', ' + this.lastName;
 });
 
-//Export model
+// Virtual for member's URL
+MemberSchema.virtual('url').get(function () {
+  return '/family/' + this._id;
+});
+
+// Export model
 module.exports = mongoose.model('Member', MemberSchema);

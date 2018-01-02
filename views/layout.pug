@@ -29,30 +29,42 @@ html(lang='en')
       <!-- Favicon -->
       link(rel='icon' href='images/favicon.png' type='image/png')
   body
-    block navi
-      .row
-        .col-md-10
-          ul(class='nav nav-tabs')
-            li(class='active')
-              a(href='/') Home
-            li
-              a(href='/family') Families
-        .col-md-2
-          button.btn.btn-info(type='button' data-toggle='modal' data-target='#resetModal') Reset Database
-
-    block content
-
-    block reset_modal    
-      div.modal.fade(id='resetModal' role='dialog')
-        .modal-dialog
-          .modal-content
-            .modal-header
-              button.close(type='button' data-dismiss='modal') &times;
-              h4.modal-title
-              Modal Header</h4>
-            .modal-body
-              p
-                Do you really want to rest the database?
-            .modal-footer
-              button.btn.btn-default(type='button' data-dismiss='modal') No
-              a.btn.btn-info(href='/reset' role='button') Yes
+    .container-fluid
+      block navi
+        nav.navbar.navbar-default
+          .container-fluid
+            .navbar-header
+              button.navbar-toggle.collapsed(type='button'  data-toggle='collapse' data-target='#navbar1')
+                span.sr-only Toggle navigation
+                span.icon-bar
+                span.icon-bar
+                span.icon-bar
+              .brand-centered
+                a.navbar-brand.navbar-left(href='https://www.protacon.com/' target='_new')
+                  img.img-responsive.center-block(src='images/protacon_logo.png')
+            
+            #navbar1.navbar-collapse.collapse
+              ul(class='nav nav-tabs')
+                li(class='active')
+                  a(href='/') Home
+                li
+                  a(href='/family') Families
+            .row
+              button.btn.btn-info(type='button' data-toggle='modal' data-target='#resetModal') Reset Database
+  
+      block content
+  
+      block reset_modal    
+        div.modal.fade(id='resetModal' role='dialog')
+          .modal-dialog
+            .modal-content
+              .modal-header
+                button.close(type='button' data-dismiss='modal') &times;
+                h4.modal-title
+                Modal Header</h4>
+              .modal-body
+                p
+                  Do you really want to rest the database?
+              .modal-footer
+                button.btn.btn-default(type='button' data-dismiss='modal') No
+                a.btn.btn-info(href='/reset' role='button') Yes

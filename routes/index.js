@@ -6,7 +6,7 @@ var familyCtrl = require('../controllers/family');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: ''});
+  res.redirect('/family');
 });
 
 /* GET reset family */
