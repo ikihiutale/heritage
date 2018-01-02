@@ -7,14 +7,15 @@ block content
         div(class='row')
           div(class='three columns ptc-left')
             hr 
-            h2 Select family tree #{data.memberCount}
-            ul.members
-              each member in data.members
-                li 
-                  a(href=member.url) #{member.name} 
-
-              else
-                li There are no books.
+            h2 Select family tree (#{data.memberCount})
+            .scroll
+              ul.members
+                each member in data.members
+                  li 
+                    a(href=member.url) #{member.name} 
+  
+                else
+                  li There are no members.
       
           div(class='nine columns ptc-right')
             h1 Julia Humanistin sukupuu

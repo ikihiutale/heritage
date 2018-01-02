@@ -18,6 +18,7 @@
 
 .navbar-brand > img {
     width : 100%;
+    min-width: 90px;
     min-height: 70px;
     display: block;
 }

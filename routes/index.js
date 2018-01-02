@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var router = express.Router();
 
@@ -12,5 +14,7 @@ router.get('/', function(req, res, next) {
 /* GET reset family */
 router.get('/reset', familyCtrl.reset);
 
+/* GET reset family */
+router.get('/about', familyCtrl.about);
 
 module.exports = router;
