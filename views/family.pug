@@ -13,12 +13,11 @@ block content
                 each member in data.members
                   li 
                     a(href=member.url) #{member.name} 
-  
                 else
                   li There are no members.
-      
           div(class='nine columns ptc-right')
-            h1 Julia Humanistin sukupuu
+            if data.member
+              h1 Family tree of - #{data.member.name}
             div(class='ptc-tree-background')
               div(class='ptc-family-tree')
 

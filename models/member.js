@@ -12,7 +12,7 @@ var MemberSchema = new Schema({
 
 // Virtual for member's full name
 MemberSchema.virtual('name').get(function () {
-  return this.firstName + ', ' + this.lastName;
+  return this.firstName + ' ' + this.lastName;
 });
 
 // Virtual for member's URL

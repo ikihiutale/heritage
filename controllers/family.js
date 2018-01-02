@@ -34,7 +34,11 @@ exports.tree = function(req, res, next) {
 
   // Find mother
   .then(function(siblings) {
+    if (siblings.length) {
+      siblings.splice(Math.round((siblings.length - 1) / 2), 0, treeData.member);
+    }
     console.log("SIBLINGS.. " + siblings);
+    
     treeData.siblings = siblings;
     return Member.find({id: { $in : treeData.member.mother}}).exec();
   })
