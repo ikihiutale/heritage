@@ -1,26 +1,27 @@
 extends layout
-mixin memberLink(member)
-  a(href=member.url) #{member.name}
+mixin memberLink(memberObj)
+  a(href=memberObj.url) #{memberObj.name}
 
 mixin parseGrandparents(grandparents)
-  if (grandparents.length == 2)
-    memberTree(grandparents[0], [1])
-  else if (grandparents.length == 1)
-    memberTree(grandparents[0])    
+  if (grandparents)
+    if grandparents.length == 2
+      memberTree(grandparents[0], [1])
+    else if (grandparents.length == 1)
+      memberTree(grandparents[0])    
 
 mixin memberTree(mother, father)
-  if mother || father    
+  if mother !=null || father !=null
     ul
       if mother
         li
           +memberLink(mother)
-          +parseGrandparents(data.motherParents)
+          +parseGrandparents(data.motherParentObjs)
       if father
         li
           +memberLink(father)
-          +parseGrandparents(data.fatherParents)
+          +parseGrandparents(data.fatherParentObjs)
 
-block content   
+block content
   div(class='row')
     div(class='col-md-12')
       div(class='container ptc-custom u-full-width u-max-full-width')
@@ -30,19 +31,20 @@ block content
             h2 Select family tree (#{data.memberCount})
             .scroll
               ul.members
-                each member in data.members
+                each member in data.memberObjs
                   li 
                     +memberLink(member) 
                 else
                   li There are no members.
           div(class='nine columns ptc-right')
-            if data.member
-              h1 Family tree of - #{data.member.name}
+            if data.memberObj
+              h1 Family tree - #{data.memberObj.name}
             div(class='ptc-tree-background')
               div(class='ptc-family-tree')
-                ul
-                  each member in data.siblings
-                    li 
-                      +memberLink(member)
-                        if data.member.id == member.id
-                          +memberTree(data.mother, data.father)
+                if data.memberObj
+                  ul
+                    each member in data.siblingObjs
+                      li 
+                        +memberLink(member)
+                        if (data.memberObj.id == member.id)
+                          +memberTree(data.motherObj, data.fatherObj)

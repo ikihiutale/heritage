@@ -12,69 +12,71 @@ exports.tree = function(req, res, next) {
   
   // Find members
   Member.find().sort([['lastName', 'ascending']]).exec()  
-  .then(function(members) {
-    treeData.members = members;
-    treeData.memberCount = members.length;
-    console.log("Members count " + treeData.memberCount);
+  .then(function(memberObjs) {
+    treeData.memberObjs = memberObjs;
+    treeData.memberCount = memberObjs.length;
 
     // Find member
     return Member.findById(memberId).exec();
   })
   
   // Find siblings
-  .then(function(member) {
-    console.log("Member: " + memberId + ", " + (member ? member.id : 'null'));
-    treeData.member = member;
-    console.log("MEMBER.. " + treeData.member);
+  .then(function(memberObj) {
+    treeData.memberObj = memberObj;
     return Member.find().or([
-      { $and: [{father: member.father}, {father: {$ne: null}}, {id: {$ne: member.id}}]},
-      { $and: [{mother: member.mother}, {mother: {$ne: null}}, {id: {$ne: member.id}}]}
+      { $and: [{father: memberObj.father}, {father: {$ne: null}}, {id: {$ne: memberObj.id}}]},
+      { $and: [{mother: memberObj.mother}, {mother: {$ne: null}}, {id: {$ne: memberObj.id}}]}
     ]).exec();
   })
 
   // Find mother
-  .then(function(siblings) {
-    if (siblings.length) {
-      siblings.splice(Math.round((siblings.length - 1) / 2), 0, treeData.member);
+  .then(function(siblingObjs) {
+    if (siblingObjs.length) {
+      siblingObjs.splice(Math.round((siblingObjs.length - 1) / 2), 0, treeData.memberObj);
     }
     else {
-      siblings.push(treeData.member);
+      siblingObjs.push(treeData.memberObj);
     }
-    console.log("SIBLINGS.. " + siblings);
-    
-    treeData.siblings = siblings;
-    return Member.find({id: { $in : treeData.member.mother}}).exec();
+    treeData.siblingObjs = siblingObjs;
+    return Member.findOne({id: treeData.memberObj.mother}).exec();
   })
 
   // Find father
-  .then(function(mother) {
-    console.log("MOTHER.. " + mother);
-    treeData.mother = mother;
-    return Member.find({id: { $in : treeData.member.father}}).exec();    
+  .then(function(motherObj) {
+    treeData.motherObj = motherObj;
+    return Member.findOne({id: treeData.memberObj.father}).exec();    
   })
 
   // Find mother's parents
-  .then(function(father) {
-    console.log("FATHER.. " + father);
-    treeData.father = father;
-    return Member.find({id: { $in : [treeData.mother.mother, treeData.mother.father]}}).exec();
+  .then(function(fatherObj) {
+    treeData.fatherObj = fatherObj;
+    var motherId = (treeData.motherObj != null ? treeData.motherObj.mother : null);
+    var fatherId = (treeData.motherObj != null ? treeData.motherObj.father : null);
+    return Member.findOne({id: { $in : [motherId, fatherId]}}).exec();
   })
 
   // Find father's parents
-  .then(function(motherParents) {
-    console.log("MOTHER's PARENTS.. " + motherParents);
-    treeData.motherParents = motherParents;
-    return Member.find({id: { $in : [treeData.father.mother, treeData.father.father]}}).exec();
+  .then(function(motherParentObjs) {
+    treeData.motherParentObjs = motherParentObjs;
+    var motherId = (treeData.fatherObj  != null ? treeData.fatherObj.mother : null);
+    var fatherId = (treeData.fatherObj  != null ? treeData.fatherObj.father : null);
+    return Member.find({id: { $in : [motherId, fatherId]}}).exec();
   })
 
   // Find father's parents
-  .then(function(fatherParents) {
-    console.log("FATHER's PARENTS.. " + fatherParents);
-    treeData.fatherParents = fatherParents;
+  .then(function(fatherParentObjs) {
+    treeData.fatherParentObjs = fatherParentObjs;
+    
+    console.log("MEMBER OBJ " + treeData.memberObj);
+    console.log("MEMBER COUNT " + treeData.memberCount);
+    console.dir("SIBLINGS OBJs " + treeData.siblingObjs);
+    console.log("FATHER OBJ " + treeData.fatherObj + ", " + (treeData.fatherObj ? treeData.fatherObj.id : " "));
+    console.log("MOTHER OBJ " + treeData.motherObj  + ", " + (treeData.motherObj ? treeData.motherObj.id : " "));
+    
     res.render('family', { title: 'Family tree', data: treeData});
   })
   .catch(function(err) {
-    console.log('Family -> data: ' + err);
+    console.log('Error: ' + err);
     next(err);
   });
 };
@@ -84,7 +86,7 @@ exports.members = function(req, res, next) {
   var treeData = {};
   Member.find().sort([['lastName', 'ascending']]).exec()
   .then(function(result) {
-    treeData.members = result;
+    treeData.memberObjs = result;
     treeData.memberCount = result.length;
     console.log("Member count " + treeData.memberCount);
     return treeData;
