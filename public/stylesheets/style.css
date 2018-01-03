@@ -1,46 +1,21 @@
- 
-.brand-centered {
-  display: flex; 
-  flex-flow: row wrap;
-}
-
-.brand-centered a {
-  flex : 0 0 20%;
-  display: flex;
-  align-items: center;
-}
-
-.brand-centered > a > img{
-  flex : 0 0 20%;
-  display: flex;
-  align-items: center;
-}
-
-.navbar-brand > img {
-    width : 100%;
-    min-width: 90px;
-    min-height: 70px;
-    display: block;
-}
 
 ul.members li {
  list-style-type: none;
 }
 
 .ptc-family-tree li a {
+  padding: 30px 5px 5px 5px;
+  height: 130px;
+ }
+
+ul.members li a:active { 
+  background-color: yellow;
+}
+
+div.reset-db { 
   padding: 5px;
-  display: table-cell; 
-  vertical-align: middle; 
 }
 
-.ptc-family-tree li {
-    padding: 0;
-    margin: 0;
-    display: inline-block;
-    vertical-align: top;
-}
-
-.ptc-family-tree li:before,
-.ptc-family-tree li:after {
-    top: -20px !important;
+div.reset-db button { 
+  width: 100%;
 }

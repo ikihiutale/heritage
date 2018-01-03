@@ -52,7 +52,7 @@ exports.tree = function(req, res, next) {
     treeData.fatherObj = fatherObj;
     var motherId = (treeData.motherObj != null ? treeData.motherObj.mother : null);
     var fatherId = (treeData.motherObj != null ? treeData.motherObj.father : null);
-    return Member.findOne({id: { $in : [motherId, fatherId]}}).exec();
+    return Member.find({id: { $in : [motherId, fatherId]}}).exec();
   })
 
   // Find father's parents
@@ -67,11 +67,13 @@ exports.tree = function(req, res, next) {
   .then(function(fatherParentObjs) {
     treeData.fatherParentObjs = fatherParentObjs;
     
-    console.log("MEMBER OBJ " + treeData.memberObj);
-    console.log("MEMBER COUNT " + treeData.memberCount);
-    console.dir("SIBLINGS OBJs " + treeData.siblingObjs);
-    console.log("FATHER OBJ " + treeData.fatherObj + ", " + (treeData.fatherObj ? treeData.fatherObj.id : " "));
-    console.log("MOTHER OBJ " + treeData.motherObj  + ", " + (treeData.motherObj ? treeData.motherObj.id : " "));
+//    console.log("MEMBER OBJ " + treeData.memberObj);
+//    console.log("MEMBER COUNT " + treeData.memberCount);
+//    console.dir("SIBLINGS OBJs " + treeData.siblingObjs);
+//    console.log("FATHER OBJ " + treeData.fatherObj + ", " + (treeData.fatherObj ? treeData.fatherObj.id : " "));
+//    console.log("MOTHER OBJ " + treeData.motherObj  + ", " + (treeData.motherObj ? treeData.motherObj.id : " "));
+//    console.log("MOTHER PARENT OBJS " + treeData.motherParentObjs  + ", " + (treeData.motherParentObjs ? treeData.motherParentObjs.length : " "));
+//    console.log("FATHER PARENT OBJS " + treeData.fatherParentObjs  + ", " + (treeData.fatherParentObjs ? treeData.fatherParentObjs.length : " "));
     
     res.render('family', { title: 'Family tree', data: treeData});
   })
