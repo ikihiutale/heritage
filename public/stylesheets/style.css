@@ -19,3 +19,10 @@ div.reset-db {
 div.reset-db button { 
   width: 100%;
 }
+
+.navbar-brand > img {
+  height: 80px;
+  width: 150px;
+  top: -25px;
+  position: relative;
+}

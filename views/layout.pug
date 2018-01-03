@@ -27,31 +27,28 @@ html(lang='en')
       script(src='/js/script.js')
     
       <!-- Favicon -->
-      link(rel='icon' href='images/favicon.png' type='image/png')
+      link(rel='icon' href='static/images/favicon.png' type='image/png')
   body
+    nav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          a.navbar-brand.navbar-left(href='https://www.protacon.com/' target='_new')
+            img(src='/static/images/protacon_logo.png')
+          button.navbar-toggle.collapsed(type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        #navbarResponsive.collapse.navbar-collapse
+          ul.nav.nav-tabs
+            li.nav-item.active
+              a.nav-link(href="/") Home
+                span.sr-only 
+            li.nav-item
+              a.nav-link(href="/about") About
+
     .container-fluid
-      block navi
-        nav.navbar.navbar-default
-          .container-fluid
-            .navbar-header
-              button.navbar-toggle.collapsed(type='button'  data-toggle='collapse' data-target='#navbar1')
-                span.sr-only Toggle navigation
-                span.icon-bar
-                span.icon-bar
-                span.icon-bar
-              .brand-centered
-                a.navbar-brand.navbar-left(href='https://www.protacon.com/' target='_new')
-                  img.img-responsive.center-block(src='images/protacon_logo.png')
-            
-            #navbar1.navbar-collapse.collapse
-              ul(class='nav nav-tabs')
-                li(class='active')
-                  a(href='/') Home
-                li
-                  a(href='/about') About
-  
-      block content
-  
+      block content  
       block reset_modal    
         div.modal.fade(id='resetModal' role='dialog')
           .modal-dialog
