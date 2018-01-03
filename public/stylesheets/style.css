@@ -1,0 +1,33 @@
+
+ul.members li {
+  list-style-type: none;
+  padding-left: 4px;
+}
+
+.ptc-family-tree li a {
+  padding: 30px 5px 5px 5px;
+  height: 130px;
+ }
+
+ul.members li.active2 { 
+  background-color: #384ea0;
+}
+
+ul.members li.active2 > a { 
+  color: white;
+}
+
+div.reset-db { 
+  padding: 5px;
+}
+
+div.reset-db button { 
+  width: 100%;
+}
+
+.navbar-brand > img {
+  height: 80px;
+  width: 150px;
+  top: -25px;
+  position: relative;
+}
