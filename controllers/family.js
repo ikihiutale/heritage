@@ -107,13 +107,49 @@ exports.about = function(req, res) {
   res.send('NOT IMPLEMENTED: about page');
 };
 
-// GET: reset family data
+//GET: reset family data
 exports.reset = function(req, res) {
   // Clear all existing documents from the collections
-  Member.remove().exec();
-  // Populate the Member collection from json data
-  for( var idx = 0; idx < familyTreeData.length; idx++ ) {
-    new Member(familyTreeData[idx]).save();
-  }  
-  res.redirect( "/" );
+  console.log("Reset BEGIN: delete documents");
+  Member.remove().exec()
+  .then(function() {
+      console.log("Reset: add new documents..");
+      let requests = familyTreeData.map((item) => {
+        var memberObj = new Member(item);
+        return memberObj.save();
+      });
+      
+      Promise.all(requests).then(() => { 
+        console.log("Reset END");
+        res.redirect( "/" ); 
+      });
+  })
+  .catch(function(err) {
+    console.log('Family -> reset: ' + err);
+    next(err);
+  });  
+}
+    
+// GET: reset family data
+exports.reset2 = function(req, res) {
+  // Clear all existing documents from the collections
+  console.log("Reset BEGIN: delete documents")
+  Member.remove().exec()
+  .then(function() {
+    console.log("Reset: add new documents..");
+    var itemsProcessed = 0;
+    familyTreeData.forEach((item, index, array) => {
+      new Member(item).save(() => {
+        itemsProcessed++;
+        if(itemsProcessed === array.length) {
+          console.log("Reset END")
+          res.redirect( "/" ); 
+        }
+      });
+    });
+  })
+  .catch(function(err) {
+    console.log('Family -> reset: ' + err);
+    next(err);
+  });    
 };
