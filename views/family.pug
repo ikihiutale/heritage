@@ -1,6 +1,6 @@
 extends layout
 mixin memberLink(memberObj)
-  a(href=memberObj.url) #{memberObj.name}
+  a(href=memberObj.url data-id='' + memberObj._id + '') #{memberObj.name}
 
 mixin parseGrandparents(grandparents)
   if (grandparents)
@@ -47,7 +47,7 @@ block content
                   li There are no members.
           div(class='nine columns ptc-right')
             if data.memberObj
-              h1 Family tree - #{data.memberObj.name}
+              h1.family-tree-title(data-id='' + data.memberObj._id + '') Family tree - #{data.memberObj.name}
             div(class='ptc-tree-background')
               div(class='ptc-family-tree')
                 if data.memberObj

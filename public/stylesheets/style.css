@@ -1,6 +1,7 @@
 
 ul.members li {
- list-style-type: none;
+  list-style-type: none;
+  padding-left: 4px;
 }
 
 .ptc-family-tree li a {
@@ -8,8 +9,12 @@ ul.members li {
   height: 130px;
  }
 
-ul.members li a:active { 
-  background-color: yellow;
+ul.members li.active2 { 
+  background-color: #384ea0;
+}
+
+ul.members li.active2 > a { 
+  color: white;
 }
 
 div.reset-db { 
