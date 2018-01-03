@@ -10,15 +10,15 @@ Reference tutorial: https://developer.mozilla.org/en-US/docs/Learn/Server-side/E
 
 ## Install
 Clone or download the master branch: https://github.com/ikihiutale/heritage.git
-´´´
+```
 npm install
-´´´
+```
 
 ## Run application
-´´´
+```
 npm run devstart
 npm run start
-´´´
+```
 
 Default port is 8080 - t can be changed via the .env file
 
