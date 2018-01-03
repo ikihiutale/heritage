@@ -20,8 +20,8 @@ npm run devstart
 npm run start
 ```
 
-Default port is 8080 - t can be changed via the .env file
+Default port is 8080 - the port can be changed via the .env file
 
 Open the page http://localhost:8080.
 
-click the 'RESET DATABASE' button if no data is displayed on the page.
+> Click the 'RESET DATABASE' button if no data is displayed on the page.
